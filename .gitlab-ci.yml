@@ -1,0 +1,36 @@
+image: python:3.10
+
+stages:
+  - lint_and_test
+  - publish
+
+before_script:
+  - python --version ; pip --version  # For debugging
+  - python -m venv sdk_env
+  - source sdk_env/bin/activate
+  - python -m pip install --upgrade pip
+  - pip install pytest ruff fastcrc
+  #  Add SDK to python path  (this removes the need for lots of hard coded paths to anpp_packets)
+  - SITE_PACKAGES=$(./sdk_env/bin/python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')
+  - echo "$(pwd)/Drivers" >> "$SITE_PACKAGES"/test-system-drivers.pth
+  - echo "$(pwd)" >> "$SITE_PACKAGES"/test-system-an-sdk.pth
+
+# lint:
+#   stage: lint_and_test
+#   script:
+#     - ruff .
+
+unit_tests:
+  stage: lint_and_test
+  script:
+    - pytest --collect-only
+    - pytest
+
+push_to_github:
+  stage: publish
+  script:
+    - echo "Pushing to GitHub..."
+    # Add your commands to push to GitHub here
+  only:
+    - master
+  when: manual
