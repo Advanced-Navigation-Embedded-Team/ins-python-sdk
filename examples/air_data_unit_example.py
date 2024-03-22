@@ -27,23 +27,23 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-""" This example shows how to send, receive and log ANPP packets with an Air Data Unit """
+"""This example shows how to send, receive and log ANPP packets with an Air Data Unit"""
 
 import datetime
 import sys
 
-import an_devices.air_data_unit_device as adu_device
-from anpp_packets.an_packet_protocol import ANPacket
-from anpp_packets.an_packets import PacketID
+import src.an_devices.air_data_unit_device as adu_device
+from src.anpp_packets.an_packet_protocol import ANPacket
+from src.anpp_packets.an_packets import PacketID
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Checks enough arguments in command for serial communications. Otherwise, prompts user on use.
     if len(sys.argv) != 3:
         print(
-            f"Usage: program com_port baud_rate\n"
-            f"Windows Example: python air_data_unit_example.py COM1 115200\n"
-            f"Linux Example: python air_data_unit_example.py /dev/ttyUSB0 115200"
+            "Usage: program com_port baud_rate\n"
+            "Windows Example: python air_data_unit_example.py COM1 115200\n"
+            "Linux Example: python air_data_unit_example.py /dev/ttyUSB0 115200"
         )
         exit()
     comport = str(sys.argv[1])
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
         # Creates log file for received binary data from device
         now = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        logFile = open(f"AirDataUnitLog_{now}.anpp", 'xb')
+        logFile = open(f"AirDataUnitLog_{now}.anpp", "xb")
 
         an_packet = ANPacket()
 
@@ -112,6 +112,6 @@ if __name__ == '__main__':
                     elif an_packet.id != 0:
                         print(f"Received {an_packet.id} of length:{an_packet.length}")
     else:
-        print(f"No connection.")
+        print("No connection.")
 
     air_data_unit.close()

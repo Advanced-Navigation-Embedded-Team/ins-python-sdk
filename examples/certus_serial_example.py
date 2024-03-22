@@ -27,24 +27,24 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-""" This example shows how to send, receive and log ANPP packets with a Certus"""
+"""This example shows how to send, receive and log ANPP packets with a Certus"""
 
 import datetime
 import sys
 import math
 
-import an_devices.certus_device as certus_device
-from anpp_packets.an_packet_protocol import ANPacket
-from anpp_packets.an_packets import PacketID
+import src.an_devices.certus_device as certus_device
+from src.anpp_packets.an_packet_protocol import ANPacket
+from src.anpp_packets.an_packets import PacketID
 
 
 if __name__ == "__main__":
     # Checks enough arguments in command for serial communications. Otherwise prompts user on use.
     if len(sys.argv) != 3:
         print(
-            f"Usage: program com_port baud_rate\n"
-            f"Windows Example: python certus_example.py COM1 115200\n"
-            f"Linux Example: python certus_example.py /dev/ttyUSB0 115200"
+            "Usage: program com_port baud_rate\n"
+            "Windows Example: python certus_example.py COM1 115200\n"
+            "Linux Example: python certus_example.py /dev/ttyUSB0 115200"
         )
         exit()
     comport = str(sys.argv[1])
@@ -140,6 +140,6 @@ if __name__ == "__main__":
                     elif an_packet.id != 0:
                         print(f"Received {an_packet.id} of length:{an_packet.length}")
     else:
-        print(f"No connection.")
+        print("No connection.")
 
     certus.close()
