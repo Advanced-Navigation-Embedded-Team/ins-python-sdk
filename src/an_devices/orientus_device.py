@@ -32,67 +32,6 @@ from .advanced_navigation_device_serial import (
 )
 from anpp_packets.an_packets import PacketID as _PacketID
 
-from anpp_packets.an_packet_0 import AcknowledgePacket, AcknowledgeResult
-from anpp_packets.an_packet_1 import RequestPacket
-from anpp_packets.an_packet_2 import BootModePacket, BootMode
-from anpp_packets.an_packet_3 import DeviceInformationPacket
-from anpp_packets.an_packet_4 import RestoreFactorySettingsPacket
-from anpp_packets.an_packet_5 import ResetPacket, ResetVerification
-from anpp_packets.an_packet_7 import (
-    FileTransferFirstPacket,
-    DataEncoding,
-    FileTransferMetadata,
-)
-from anpp_packets.an_packet_8 import FileTransferAcknowledgePacket, FileTransferResponse
-from anpp_packets.an_packet_9 import FileTransferOngoingPacket
-from anpp_packets.an_packet_20 import SystemStatePacket, GNSSFixType
-from anpp_packets.an_packet_21 import UnixTimePacket
-from anpp_packets.an_packet_23 import StatusPacket
-from anpp_packets.an_packet_26 import EulerOrientationStandardDeviationPacket
-from anpp_packets.an_packet_27 import QuaternionOrientationStandardDeviationPacket
-from anpp_packets.an_packet_28 import RawSensorsPacket
-from anpp_packets.an_packet_37 import AccelerationPacket
-from anpp_packets.an_packet_39 import EulerOrientationPacket
-from anpp_packets.an_packet_40 import QuaternionOrientationPacket
-from anpp_packets.an_packet_41 import DCMOrientationPacket
-from anpp_packets.an_packet_42 import AngularVelocityPacket
-from anpp_packets.an_packet_43 import AngularAccelerationPacket
-from anpp_packets.an_packet_44 import ExternalPositionVelocityPacket
-from anpp_packets.an_packet_45 import ExternalPositionPacket
-from anpp_packets.an_packet_46 import ExternalVelocityPacket
-from anpp_packets.an_packet_48 import ExternalHeadingPacket
-from anpp_packets.an_packet_49 import RunningTimePacket
-from anpp_packets.an_packet_50 import LocalMagneticFieldPacket
-from anpp_packets.an_packet_180 import PacketTimerPeriodPacket
-from anpp_packets.an_packet_181 import PacketsPeriodPacket
-from anpp_packets.an_packet_182 import BaudRatesPacket
-from anpp_packets.an_packet_184 import (
-    SensorRangesPacket,
-    AccelerometerRange,
-    GyroscopeRange,
-    MagnetometerRange,
-)
-from anpp_packets.an_packet_185 import InstallationAlignmentPacket
-from anpp_packets.an_packet_186 import FilterOptionsPacket, VehicleType
-from anpp_packets.an_packet_188 import (
-    GPIOConfigurationPacket,
-    GPIO1Function,
-    GPIO2Function,
-    AuxiliaryTxFunction,
-    AuxiliaryRxFunction,
-    GPIOIndex,
-)
-from anpp_packets.an_packet_189 import MagneticCalibrationValuesPacket
-from anpp_packets.an_packet_190 import (
-    MagneticCalibrationConfigurationPacket,
-    MagneticCalibrationAction,
-)
-from anpp_packets.an_packet_191 import (
-    MagneticCalibrationStatusPacket,
-    MagneticCalibrationStatus,
-)
-from anpp_packets.an_packet_193 import SetZeroOrientationAlignmentPacket
-
 
 class Orientus(_AdvancedNavigationDevice):
     """Orientus object with high level functions for setting and receiving values"""
