@@ -32,6 +32,7 @@ from .advanced_navigation_device_serial import (
 )
 from anpp_packets.an_packets import PacketID as _PacketID
 
+
 class CertusEvo(_AdvancedNavigationDevice):
     """Certus Evo object with high level functions for setting and receiving values"""
 

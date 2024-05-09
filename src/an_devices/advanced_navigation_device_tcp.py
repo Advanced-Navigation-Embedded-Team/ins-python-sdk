@@ -62,7 +62,7 @@ class AdvancedNavigationDeviceTCP(ABC):
             return True
         except socket.timeout:
             return False
-        except:
+        except:  # noqa: E722
             return False
 
     def close(self):

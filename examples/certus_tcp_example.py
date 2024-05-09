@@ -33,7 +33,7 @@ import datetime
 import sys
 import math
 
-import an_devices.spatial_device as spatial_device
+import an_devices.certus_device as certus_device
 from anpp_packets.an_packet_protocol import ANPacket
 from anpp_packets.an_packets import PacketID
 

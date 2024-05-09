@@ -32,9 +32,9 @@
 import datetime
 import sys
 
-import src.an_devices.air_data_unit_device as adu_device
-from src.anpp_packets.an_packet_protocol import ANPacket
-from src.anpp_packets.an_packets import PacketID
+import an_devices.air_data_unit_device as adu_device
+from anpp_packets.an_packet_protocol import ANPacket
+from anpp_packets.an_packets import PacketID
 
 
 if __name__ == "__main__":

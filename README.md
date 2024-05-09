@@ -17,6 +17,4 @@ For further detail on each product supported by the SDK, please see the followin
 - [Motus](https://www.advancednavigation.com/imu-ahrs/mems-imu/motus/#Documentation)
 - [Orientus](https://www.advancednavigation.com/imu-ahrs/mems-imu/orientus/#Documentation)
 - [Spatial](https://www.advancednavigation.com/inertial-navigation-systems/mems-gnss-ins/spatial/#Documentation)
-- [Spatial Dual]()
-- [Spatial Fog]()
 - [Spacial Fog Dual](https://www.advancednavigation.com/inertial-navigation-systems/fog-gnss-ins/spatial-fog-dual/)
