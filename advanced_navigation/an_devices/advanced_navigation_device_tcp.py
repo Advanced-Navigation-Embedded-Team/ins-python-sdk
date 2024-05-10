@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                        advanced_navigation_device_serial.py                ##
+##                        advanced_navigation_device_tcp.py                   ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -27,75 +27,63 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-import os
-import serial
-import serial.serialutil as serialutil
+import socket
 from abc import ABC, abstractmethod
 
-from anpp_packets.an_packets import PacketID
-from anpp_packets.an_packet_protocol import ANDecoder
-from anpp_packets.an_packet_1 import RequestPacket
+from ..anpp_packets.an_packets import PacketID
+from ..anpp_packets.an_packet_protocol import ANDecoder
+from ..anpp_packets.an_packet_1 import RequestPacket
 
 
-class AdvancedNavigationDeviceSerial(ABC):
-    def __init__(self, port, baud):
+class AdvancedNavigationDeviceTCP(ABC):
+    def __init__(self, address, port):
+        self.timeout = 0.5
+        self.address = None
+        self.port = None
         self.decoder = ANDecoder()
-        self.ser = None
 
-        if isinstance(port, str):
+        if isinstance(address, str):
+            self.address = address
+        else:
+            raise ValueError(f"IP Address :{address} is not valid")
+
+        if isinstance(port, int):
             self.port = port
         else:
             raise ValueError(f"Port:{port} is not valid")
 
-        if int(baud) in self.valid_baud_rates:
-            self.baud = baud
-        else:
-            raise ValueError(f"Baud Rate:{baud} is not valid")
-
-    @property
-    @abstractmethod
-    def valid_baud_rates(self):
-        """Child class needs to declare this property"""
-        pass
-
-    # Serial Communications
+    # TCP Communications
     def start(self):
-        # Checks if operating system is Windows or Linux
-        if (os.name == "nt") or (os.name == "posix"):
-            # Connects to serial port
-            self.ser = serial.Serial(
-                port=self.port,
-                baudrate=self.baud,
-                bytesize=serialutil.EIGHTBITS,
-                parity=serialutil.PARITY_NONE,
-                stopbits=serialutil.STOPBITS_ONE,
-                timeout=None,
-                xonxoff=False,
-                rtscts=False,
-                write_timeout=None,
-                dsrdtr=False,
-                inter_byte_timeout=None,
-            )
-        else:
-            print(
-                "Packet_example currently only supports Windows and Linux operating systems."
-            )
-            exit()
+        self.tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.tcp.settimeout(self.timeout)
+
+        try:
+            self.tcp.connect((self.address, self.port))
+            return True
+        except socket.timeout:
+            return False
+        except:  # noqa: E722
+            return False
 
     def close(self):
-        self.ser.close()
+        self.tcp.close()
 
     def is_open(self):
-        return self.ser.is_open
+        try:
+            self.tcp.recv(8, socket.MSG_PEEK)
+            return True
+        except socket.timeout:
+            return True
+        except Exception as e:
+            print(f"exception in connection check : {e}")
+            return False
 
-    def flush(self):
-        self.ser.flush()
-
-    def in_waiting(self):
-        return self.ser.in_waiting
-
-    def read(self, bytes_in_buffer):
-        return self.ser.read(bytes_in_buffer)
+    def read(self):
+        try:
+            return self.tcp.recv(64)
+        except Exception as e:
+            print(f"exception in read : {e}")
+            return None
 
     # Device and Configuration Information
     @abstractmethod
@@ -114,4 +102,4 @@ class AdvancedNavigationDeviceSerial(ABC):
     # System Packets
     def request_packet(self, packet_id: PacketID):
         print(f"Requesting PacketIDs: {packet_id}")
-        self.ser.write(RequestPacket(packet_id).encode().bytes())
+        self.tcp.sendall(RequestPacket(packet_id).encode().bytes())

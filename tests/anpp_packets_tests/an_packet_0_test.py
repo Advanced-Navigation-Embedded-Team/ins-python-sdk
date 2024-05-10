@@ -27,9 +27,9 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-from src.anpp_packets.an_packet_protocol import ANPacket
-from src.anpp_packets.an_packets import PacketID
-from src.anpp_packets.an_packet_0 import AcknowledgePacket, AcknowledgeResult
+from advanced_navigation.anpp_packets.an_packet_protocol import ANPacket
+from advanced_navigation.anpp_packets.an_packets import PacketID
+from advanced_navigation.anpp_packets.an_packet_0 import AcknowledgePacket, AcknowledgeResult
 
 
 def test_acknowledge_packet():

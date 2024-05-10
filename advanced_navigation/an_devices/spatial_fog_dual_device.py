@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                            orientus_device.py                              ##
+##                         spatial_fog_dual_device.py                         ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -30,11 +30,11 @@
 from .advanced_navigation_device_serial import (
     AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
 )
-from anpp_packets.an_packets import PacketID as _PacketID
+from ..anpp_packets.an_packets import PacketID as _PacketID
 
 
-class Orientus(_AdvancedNavigationDevice):
-    """Orientus object with high level functions for setting and receiving values"""
+class SpatialFOGDual(_AdvancedNavigationDevice):
+    """Spatial FOG Dual object with high level functions for setting and receiving values"""
 
     valid_baud_rates = [
         2400,
@@ -56,17 +56,22 @@ class Orientus(_AdvancedNavigationDevice):
     ]
 
     def return_device_information_and_configuration_packets(self):
-        """Returns Orientus' Device Information and Configuration packets as
+        """Returns Spatial FOG Dual's Device Information and Configuration packets as
         all Advanced Navigation devices have different packets available"""
         return [
             _PacketID.device_information,
+            _PacketID.gnss_receiver_information,
+            _PacketID.north_seeking_initialisation_status,
             _PacketID.packet_timer_period,
             _PacketID.packets_period,
             _PacketID.baud_rates,
-            _PacketID.sensor_ranges,
             _PacketID.installation_alignment,
             _PacketID.filter_options,
             _PacketID.gpio_configuration,
-            _PacketID.magnetic_calibration_values,
-            _PacketID.magnetic_calibration_status,
+            _PacketID.odometer_configuration,
+            _PacketID.reference_point_offsets,
+            _PacketID.gpio_output_configuration,
+            _PacketID.dual_antenna_configuration,
+            _PacketID.user_data,
+            _PacketID.gpio_input_configuration,
         ]

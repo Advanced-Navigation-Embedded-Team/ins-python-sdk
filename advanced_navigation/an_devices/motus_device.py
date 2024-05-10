@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                             spatial_device.py                              ##
+##                               motus_device.py                              ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -30,17 +30,11 @@
 from .advanced_navigation_device_serial import (
     AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
 )
-from anpp_packets.an_packets import PacketID as _PacketID
-from anpp_packets.an_packet_184 import (
-    SensorRangesPacket,
-    AccelerometerRange,
-    GyroscopeRange,
-    MagnetometerRange,
-)
+from ..anpp_packets.an_packets import PacketID as _PacketID
 
 
-class Spatial(_AdvancedNavigationDevice):
-    """Spatial object with high level functions for setting and receiving values"""
+class Motus(_AdvancedNavigationDevice):
+    """Motus object with high level functions for setting and receiving values"""
 
     valid_baud_rates = [
         2400,
@@ -62,14 +56,13 @@ class Spatial(_AdvancedNavigationDevice):
     ]
 
     def return_device_information_and_configuration_packets(self):
-        """Returns Spatial's Device Information and Configuration packets as
+        """Returns Motus' Device Information and Configuration packets as
         all Advanced Navigation devices have different packets available"""
         return [
             _PacketID.device_information,
             _PacketID.packet_timer_period,
             _PacketID.packets_period,
             _PacketID.baud_rates,
-            _PacketID.sensor_ranges,
             _PacketID.installation_alignment,
             _PacketID.filter_options,
             _PacketID.gpio_configuration,
@@ -81,17 +74,3 @@ class Spatial(_AdvancedNavigationDevice):
             _PacketID.user_data,
             _PacketID.gpio_input_configuration,
         ]
-
-    def set_sensor_ranges(
-        self,
-        permanent: int,
-        accelerometers_range: AccelerometerRange,
-        gyroscopes_range: GyroscopeRange,
-        magnetometers_range: MagnetometerRange,
-    ):
-        packet = SensorRangesPacket()
-        packet.permanent = permanent
-        packet.accelerometers_range = accelerometers_range
-        packet.gyroscopes_range = gyroscopes_range
-        packet.magnetometers_range = magnetometers_range
-        self.ser.write(packet.encode().bytes())

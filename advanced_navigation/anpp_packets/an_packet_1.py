@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                               motus_device.py                              ##
+##                               an_packet_1.py                               ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -27,50 +27,36 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-from .advanced_navigation_device_serial import (
-    AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
-)
-from anpp_packets.an_packets import PacketID as _PacketID
+from dataclasses import dataclass, field
+import struct
+
+from typing import List
+
+from .an_packet_protocol import ANPacket
+from advanced_navigation.anpp_packets.an_packets import PacketID
 
 
-class Motus(_AdvancedNavigationDevice):
-    """Motus object with high level functions for setting and receiving values"""
+@dataclass()
+class RequestPacket:
+    """Packet 1 - Request Packet"""
 
-    valid_baud_rates = [
-        2400,
-        4800,
-        9600,
-        19200,
-        38400,
-        57600,
-        115200,
-        230400,
-        250000,
-        460800,
-        500000,
-        800000,
-        921600,
-        1000000,
-        1250000,
-        2000000,
-    ]
+    requested_packets: List[PacketID] = field(default_factory=list, repr=False)
 
-    def return_device_information_and_configuration_packets(self):
-        """Returns Motus' Device Information and Configuration packets as
-        all Advanced Navigation devices have different packets available"""
-        return [
-            _PacketID.device_information,
-            _PacketID.packet_timer_period,
-            _PacketID.packets_period,
-            _PacketID.baud_rates,
-            _PacketID.installation_alignment,
-            _PacketID.filter_options,
-            _PacketID.gpio_configuration,
-            _PacketID.magnetic_calibration_values,
-            _PacketID.magnetic_calibration_status,
-            _PacketID.odometer_configuration,
-            _PacketID.reference_point_offsets,
-            _PacketID.gpio_output_configuration,
-            _PacketID.user_data,
-            _PacketID.gpio_input_configuration,
-        ]
+    ID = PacketID.request
+
+    _structure = struct.Struct("<B")
+
+    def encode(self) -> ANPacket:
+        """Encode Request Packet to ANPacket
+        Returns the ANPacket"""
+        if not isinstance(self.requested_packets, list):
+            self.requested_packets = [self.requested_packets]
+
+        data = bytes()
+        for packet in self.requested_packets:
+            data += self._structure.pack(PacketID(packet).value)
+
+        an_packet = ANPacket()
+        an_packet.encode(self.ID, len(data), data)
+
+        return an_packet

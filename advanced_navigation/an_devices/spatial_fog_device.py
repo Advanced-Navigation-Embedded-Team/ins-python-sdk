@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                           air_data_unit_device.py                          ##
+##                           spatial_fog_device.py                            ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -30,14 +30,48 @@
 from .advanced_navigation_device_serial import (
     AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
 )
-from anpp_packets.an_packets import PacketID as _PacketID
+from ..anpp_packets.an_packets import PacketID as _PacketID
 
-class AirDataUnit(_AdvancedNavigationDevice):
-    """Air Data Unit object with high level functions for setting and receiving values"""
 
-    valid_baud_rates = [115200]
+
+class SpatialFOG(_AdvancedNavigationDevice):
+    """Spatial FOG object with high level functions for setting and receiving values"""
+
+    valid_baud_rates = [
+        2400,
+        4800,
+        9600,
+        19200,
+        38400,
+        57600,
+        115200,
+        230400,
+        250000,
+        460800,
+        500000,
+        800000,
+        921600,
+        1000000,
+        1250000,
+        2000000,
+    ]
 
     def return_device_information_and_configuration_packets(self):
-        """Returns Air Data Unit's Device Information and Configuration packets as
+        """Returns Spatial FOG's Device Information and Configuration packets as
         all Advanced Navigation devices have different packets available"""
-        return [_PacketID.device_information]
+        return [
+            _PacketID.device_information,
+            _PacketID.gnss_receiver_information,
+            _PacketID.north_seeking_initialisation_status,
+            _PacketID.packet_timer_period,
+            _PacketID.packets_period,
+            _PacketID.baud_rates,
+            _PacketID.installation_alignment,
+            _PacketID.filter_options,
+            _PacketID.gpio_configuration,
+            _PacketID.odometer_configuration,
+            _PacketID.reference_point_offsets,
+            _PacketID.gpio_output_configuration,
+            _PacketID.user_data,
+            _PacketID.gpio_input_configuration,
+        ]

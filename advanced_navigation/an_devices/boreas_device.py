@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                            certus_evo_device.py                            ##
+##                             boreas_device.py                               ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -30,11 +30,12 @@
 from .advanced_navigation_device_serial import (
     AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
 )
-from anpp_packets.an_packets import PacketID as _PacketID
+from ..anpp_packets.an_packets import PacketID as _PacketID
 
 
-class CertusEvo(_AdvancedNavigationDevice):
-    """Certus Evo object with high level functions for setting and receiving values"""
+
+class BoreasD90(_AdvancedNavigationDevice):
+    """Boreas D90 object with high level functions for setting and receiving values"""
 
     valid_baud_rates = [
         4800,
@@ -56,7 +57,7 @@ class CertusEvo(_AdvancedNavigationDevice):
     ]
 
     def return_device_information_and_configuration_packets(self):
-        """Returns Certus Evo's Device Information and Configuration packets as
+        """Returns Boreas D90's Device Information and Configuration packets as
         all Advanced Navigation devices have different packets available"""
         return [
             _PacketID.device_information,
@@ -64,14 +65,13 @@ class CertusEvo(_AdvancedNavigationDevice):
             _PacketID.extended_device_information,
             _PacketID.subcomponent_information,
             _PacketID.gnss_receiver_information,
+            _PacketID.north_seeking_initialisation_status,
             _PacketID.packet_timer_period,
             _PacketID.packets_period,
             _PacketID.baud_rates,
             _PacketID.installation_alignment,
             _PacketID.filter_options,
             _PacketID.gpio_configuration,
-            _PacketID.magnetic_calibration_values,
-            _PacketID.magnetic_calibration_status,
             _PacketID.odometer_configuration,
             _PacketID.reference_point_offsets,
             _PacketID.gpio_output_configuration,

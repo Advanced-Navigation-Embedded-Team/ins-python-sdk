@@ -27,8 +27,8 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-from src.anpp_packets.an_packets import PacketID
-from src.anpp_packets.an_packet_1 import RequestPacket
+from advanced_navigation.anpp_packets.an_packets import PacketID
+from advanced_navigation.anpp_packets.an_packet_1 import RequestPacket
 
 
 def test_request_packet():

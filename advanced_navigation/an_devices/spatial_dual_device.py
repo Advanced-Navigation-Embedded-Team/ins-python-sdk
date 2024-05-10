@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                          gnss_compass_device.py                            ##
+##                           spatial_dual_device.py                           ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -30,13 +30,15 @@
 from .advanced_navigation_device_serial import (
     AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
 )
-from anpp_packets.an_packets import PacketID as _PacketID
+from ..anpp_packets.an_packets import PacketID as _PacketID
 
 
-class GNSSCompass(_AdvancedNavigationDevice):
-    """GNSS Compass object with high level functions for setting and receiving values"""
+
+class SpatialDual(_AdvancedNavigationDevice):
+    """Spatial Dual object with high level functions for setting and receiving values"""
 
     valid_baud_rates = [
+        2400,
         4800,
         9600,
         19200,
@@ -52,24 +54,26 @@ class GNSSCompass(_AdvancedNavigationDevice):
         1000000,
         1250000,
         2000000,
-        4000000,
     ]
 
     def return_device_information_and_configuration_packets(self):
-        """Returns GNSS Compass' Device Information and Configuration packets as
+        """Returns Spatial Dual's Device Information and Configuration packets as
         all Advanced Navigation devices have different packets available"""
         return [
             _PacketID.device_information,
-            _PacketID.ip_configuration,
             _PacketID.gnss_receiver_information,
             _PacketID.packet_timer_period,
             _PacketID.packets_period,
             _PacketID.baud_rates,
             _PacketID.sensor_ranges,
+            _PacketID.installation_alignment,
             _PacketID.filter_options,
             _PacketID.gpio_configuration,
+            _PacketID.odometer_configuration,
             _PacketID.reference_point_offsets,
             _PacketID.gpio_output_configuration,
+            _PacketID.dual_antenna_configuration,
             _PacketID.gnss_configuration,
             _PacketID.user_data,
+            _PacketID.gpio_input_configuration,
         ]

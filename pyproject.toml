@@ -1,9 +1,12 @@
 [tool.poetry]
-name = "ins-python-sdk"
-version = "0.1.0"
+name = "advanced_navigation"
+version = "0.1.51"
 description = ""
 authors = ["Charles Balderstone <charles.balderstone@advancednavigation.com>"]
 readme = "README.md"
+packages = [
+    { include = "advanced_navigation" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -2,11 +2,10 @@
 
 Python SDK for Advanced Navigation INS devices.
 
-### Requirements
+### Usage
 
-- This SDK requires Python 3.10 or greater, PySerial 3.5 or greater and fastcrc 0.2.1 or greater.
-- Add this directory to the Python path.
-- Add PySerial to the Python path.
+- To install, use `pip install advanced_navigation`
+- Check out examples for sample usage
 
 ### Product Manuals
 For further detail on each product supported by the SDK, please see the following documentation:
