@@ -2,7 +2,7 @@
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
 ##                             spatial_example.py                             ##
-##                     Copyright 2023, Advanced Navigation                    ##
+##                      Copyright 2023, Advanced Navigation                   ##
 ##                                                                            ##
 ################################################################################
 #                                                                              #
