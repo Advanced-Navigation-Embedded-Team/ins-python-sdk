@@ -30,9 +30,9 @@
 import socket
 from abc import ABC, abstractmethod
 
-from anpp_packets.an_packets import PacketID
-from anpp_packets.an_packet_protocol import ANDecoder
-from anpp_packets.an_packet_1 import RequestPacket
+from ..anpp_packets.an_packets import PacketID
+from ..anpp_packets.an_packet_protocol import ANDecoder
+from ..anpp_packets.an_packet_1 import RequestPacket
 
 
 class AdvancedNavigationDeviceTCP(ABC):
@@ -62,7 +62,7 @@ class AdvancedNavigationDeviceTCP(ABC):
             return True
         except socket.timeout:
             return False
-        except:
+        except:  # noqa: E722
             return False
 
     def close(self):

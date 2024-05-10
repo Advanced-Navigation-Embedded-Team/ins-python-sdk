@@ -32,9 +32,9 @@ import serial
 import serial.serialutil as serialutil
 from abc import ABC, abstractmethod
 
-from anpp_packets.an_packets import PacketID
-from anpp_packets.an_packet_protocol import ANDecoder
-from anpp_packets.an_packet_1 import RequestPacket
+from ..anpp_packets.an_packets import PacketID
+from ..anpp_packets.an_packet_protocol import ANDecoder
+from ..anpp_packets.an_packet_1 import RequestPacket
 
 
 class AdvancedNavigationDeviceSerial(ABC):

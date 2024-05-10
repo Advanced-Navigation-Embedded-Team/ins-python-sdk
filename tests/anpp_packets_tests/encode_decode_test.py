@@ -27,9 +27,9 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-from src.anpp_packets.an_packet_protocol import ANDecoder
-from src.anpp_packets.an_packets import PacketID
-from src.anpp_packets import *
+from advanced_navigation.anpp_packets.an_packet_protocol import ANDecoder
+from advanced_navigation.anpp_packets.an_packets import PacketID
+from advanced_navigation.anpp_packets import *
 
 def get_obj_from_enum(packet_enum):
     match packet_enum:

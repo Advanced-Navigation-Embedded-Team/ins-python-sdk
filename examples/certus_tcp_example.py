@@ -33,18 +33,18 @@ import datetime
 import sys
 import math
 
-import an_devices.certus_device as certus_device
-from anpp_packets.an_packet_protocol import ANPacket
-from anpp_packets.an_packets import PacketID
+import advanced_navigation.an_devices.certus_device as certus_device
+from advanced_navigation.anpp_packets.an_packet_protocol import ANPacket
+from advanced_navigation.anpp_packets.an_packets import PacketID
 
 
 if __name__ == "__main__":
     # Checks enough arguments in command for serial communications. Otherwise prompts user on use.
     if len(sys.argv) != 3:
         print(
-            f"Usage: program com_port baud_rate\n"
-            f"Windows Example: python certus_example.py COM1 115200\n"
-            f"Linux Example: python certus_example.py /dev/ttyUSB0 115200"
+            "Usage: program com_port baud_rate\n"
+            "Windows Example: python certus_example.py COM1 115200\n"
+            "Linux Example: python certus_example.py /dev/ttyUSB0 115200"
         )
         exit()
     Address = str(sys.argv[1])
@@ -142,6 +142,6 @@ if __name__ == "__main__":
                                 f"Received {an_packet.id} of length:{an_packet.length}"
                             )
     else:
-        print(f"No connection.")
+        print("No connection.")
 
     certus.close()

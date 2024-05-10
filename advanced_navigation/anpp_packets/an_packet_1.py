@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                            an_packet_0_test.py                             ##
+##                               an_packet_1.py                               ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -27,46 +27,36 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-from advanced_navigation.anpp_packets.an_packet_protocol import ANPacket
+from dataclasses import dataclass, field
+import struct
+
+from typing import List
+
+from .an_packet_protocol import ANPacket
 from advanced_navigation.anpp_packets.an_packets import PacketID
-from advanced_navigation.anpp_packets.an_packet_0 import AcknowledgePacket, AcknowledgeResult
 
 
-def test_acknowledge_packet():
-    packet = AcknowledgePacket()
-    raw_packet = ANPacket()
-    raw_packet.id = PacketID.acknowledge
-    raw_packet.length = 4
+@dataclass()
+class RequestPacket:
+    """Packet 1 - Request Packet"""
 
-    # Sensor Ranges Packet 184, returned with result: success
-    raw_packet.header = b'\x82\x00\x04y\x01'
-    raw_packet.data = b'\xb8\xc0\x84\x00'
-    assert packet.decode(raw_packet) == 0
-    assert packet.packet_id == PacketID(184)
-    assert packet.packet_crc == 33984
-    assert packet.acknowledge_result.value == AcknowledgeResult.success.value
+    requested_packets: List[PacketID] = field(default_factory=list, repr=False)
 
-    # Installation Alignment Packet 185, returned with result: failure CRC
-    raw_packet.header = b'\xa9\x00\x04\xecg'
-    raw_packet.data = b'\xb9\xc0\x84\x01'
-    assert packet.decode(raw_packet) == 0
-    assert packet.packet_id == PacketID(185)
-    assert packet.packet_crc == 33984
-    assert packet.acknowledge_result.value == AcknowledgeResult.failure_crc.value
+    ID = PacketID.request
 
-    # Filter Options Packet 186, returned with result: failure length
-    raw_packet.header = b'*\x00\x04kg'
-    raw_packet.data = b'\xba\xec\xc7\x02'
-    assert packet.decode(raw_packet) == 0
-    assert packet.packet_id == PacketID(186)
-    assert packet.packet_crc == 51180
-    assert packet.acknowledge_result.value == AcknowledgeResult.failure_length.value
+    _structure = struct.Struct("<B")
 
-    # Test decode fails for wrong packet received
-    raw_packet.id = PacketID.device_information
-    assert packet.decode(raw_packet) == 1
+    def encode(self) -> ANPacket:
+        """Encode Request Packet to ANPacket
+        Returns the ANPacket"""
+        if not isinstance(self.requested_packets, list):
+            self.requested_packets = [self.requested_packets]
 
-    # Test decode fails for wrong packet length
-    raw_packet.id = PacketID.acknowledge
-    raw_packet.data = b'\xb8\xc0\x84\x00\x00'
-    assert packet.decode(raw_packet) == 1
+        data = bytes()
+        for packet in self.requested_packets:
+            data += self._structure.pack(PacketID(packet).value)
+
+        an_packet = ANPacket()
+        an_packet.encode(self.ID, len(data), data)
+
+        return an_packet

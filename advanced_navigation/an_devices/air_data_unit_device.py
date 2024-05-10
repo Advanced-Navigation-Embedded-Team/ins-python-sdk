@@ -1,7 +1,7 @@
 ################################################################################
 ##                                                                            ##
 ##                   Advanced Navigation Python Language SDK                  ##
-##                            an_packet_0_test.py                             ##
+##                           air_data_unit_device.py                          ##
 ##                     Copyright 2023, Advanced Navigation                    ##
 ##                                                                            ##
 ################################################################################
@@ -27,46 +27,17 @@
 # DEALINGS IN THE SOFTWARE.                                                    #
 ################################################################################
 
-from advanced_navigation.anpp_packets.an_packet_protocol import ANPacket
-from advanced_navigation.anpp_packets.an_packets import PacketID
-from advanced_navigation.anpp_packets.an_packet_0 import AcknowledgePacket, AcknowledgeResult
+from .advanced_navigation_device_serial import (
+    AdvancedNavigationDeviceSerial as _AdvancedNavigationDevice,
+)
+from ..anpp_packets.an_packets import PacketID as _PacketID
 
+class AirDataUnit(_AdvancedNavigationDevice):
+    """Air Data Unit object with high level functions for setting and receiving values"""
 
-def test_acknowledge_packet():
-    packet = AcknowledgePacket()
-    raw_packet = ANPacket()
-    raw_packet.id = PacketID.acknowledge
-    raw_packet.length = 4
+    valid_baud_rates = [115200]
 
-    # Sensor Ranges Packet 184, returned with result: success
-    raw_packet.header = b'\x82\x00\x04y\x01'
-    raw_packet.data = b'\xb8\xc0\x84\x00'
-    assert packet.decode(raw_packet) == 0
-    assert packet.packet_id == PacketID(184)
-    assert packet.packet_crc == 33984
-    assert packet.acknowledge_result.value == AcknowledgeResult.success.value
-
-    # Installation Alignment Packet 185, returned with result: failure CRC
-    raw_packet.header = b'\xa9\x00\x04\xecg'
-    raw_packet.data = b'\xb9\xc0\x84\x01'
-    assert packet.decode(raw_packet) == 0
-    assert packet.packet_id == PacketID(185)
-    assert packet.packet_crc == 33984
-    assert packet.acknowledge_result.value == AcknowledgeResult.failure_crc.value
-
-    # Filter Options Packet 186, returned with result: failure length
-    raw_packet.header = b'*\x00\x04kg'
-    raw_packet.data = b'\xba\xec\xc7\x02'
-    assert packet.decode(raw_packet) == 0
-    assert packet.packet_id == PacketID(186)
-    assert packet.packet_crc == 51180
-    assert packet.acknowledge_result.value == AcknowledgeResult.failure_length.value
-
-    # Test decode fails for wrong packet received
-    raw_packet.id = PacketID.device_information
-    assert packet.decode(raw_packet) == 1
-
-    # Test decode fails for wrong packet length
-    raw_packet.id = PacketID.acknowledge
-    raw_packet.data = b'\xb8\xc0\x84\x00\x00'
-    assert packet.decode(raw_packet) == 1
+    def return_device_information_and_configuration_packets(self):
+        """Returns Air Data Unit's Device Information and Configuration packets as
+        all Advanced Navigation devices have different packets available"""
+        return [_PacketID.device_information]
