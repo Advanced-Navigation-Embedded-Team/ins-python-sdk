@@ -1,14 +1,14 @@
-name: publish package
-run-name: ${{ github.actor }} is updating the PyPi repo 🚀
-on: [push] 
+name: Publish PyPi Poetry
+on:
+  push:
+    branches:
+      - master
 jobs:
-  Publish-Using-Poetry:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - run: sudo apt install pipx
-    - run: pipx install poetry
-    - run: poetry config pypi-token.pypi ${{ secrets.PYPI_SCOPED_KEY }}
-    - run: echo 'listing'
-    - run: echo $(ls)
-    - run: poetry build
-    - run: poetry publish
+      - uses: actions/checkout@v3
+      - name: Build and publish to pypi
+        uses: JRubics/poetry-publish@v2.0
+        with:
+          pypi_token: ${{ secrets.PYPI_SCOPED_KEY }}
