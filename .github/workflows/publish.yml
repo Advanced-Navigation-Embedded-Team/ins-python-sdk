@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./advanced_navigation
     steps:
     - run: sudo apt install pipx
     - run: pipx install poetry
