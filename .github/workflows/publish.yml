@@ -1,0 +1,17 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+with: # Set the secret as an input
+      super_secret: ${{ secrets.PYPI_SCOPED_KEY }}
+on: [push]
+jobs:
+  Publish-Using-Poetry:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./advanced_navigation
+    steps:
+    - run: sudo apt install pipx
+    - run: pipx install poetry
+    - run: poetry config pypi-token.pypi ${{ secrets.PYPI_SCOPED_KEY }}
+    - run: poetry build
+    - run: poetry publish
