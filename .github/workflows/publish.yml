@@ -1,4 +1,5 @@
 name: Publish PyPi Poetry
+run-name: ${{ github.actor }} is sending new release to PyPi 🚀
 on:
   push:
     branches:
