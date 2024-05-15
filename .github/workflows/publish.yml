@@ -1,7 +1,5 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-with: # Set the secret as an input
-      super_secret: ${{ secrets.PYPI_SCOPED_KEY }}
+name: publish package
+run-name: ${{ github.actor }} is updating the PyPi repo 🚀
 on: [push]
 jobs:
   Publish-Using-Poetry:
