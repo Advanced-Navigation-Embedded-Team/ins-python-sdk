@@ -4,8 +4,6 @@ on: [push]
 jobs:
   Publish-Using-Poetry:
     runs-on: ubuntu-latest
-    defaults:
-      run:
     steps:
     - run: sudo apt install pipx
     - run: pipx install poetry
