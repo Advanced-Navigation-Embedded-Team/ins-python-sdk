@@ -8,5 +8,6 @@ jobs:
     - run: sudo apt install pipx
     - run: pipx install poetry
     - run: poetry config pypi-token.pypi ${{ secrets.PYPI_SCOPED_KEY }}
+    - run: cd advanced_navigation
     - run: poetry build
     - run: poetry publish
