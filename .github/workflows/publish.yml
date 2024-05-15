@@ -2,7 +2,7 @@ name: Publish PyPi Poetry
 on:
   push:
     branches:
-      - master
+      - 'master'
 jobs:
   build:
     runs-on: ubuntu-latest
