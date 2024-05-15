@@ -1,6 +1,6 @@
 name: publish package
 run-name: ${{ github.actor }} is updating the PyPi repo 🚀
-on: [push]
+on: [push] 
 jobs:
   Publish-Using-Poetry:
     runs-on: ubuntu-latest
