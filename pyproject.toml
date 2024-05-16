@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "advanced_navigation"
-version = "0.1.72"
+version = "0.1.73"
 description = ""
 authors = ["Charles Balderstone <charles.balderstone@advancednavigation.com>"]
 readme = "README.md"
